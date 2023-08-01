@@ -15,10 +15,8 @@ Original Project:
 
  Preview:
 
-<img src="/images/Preview1.jpg">
-<img src="/images/Preview2.jpg">
-<img src="/images/Preview3.jpg">
-<img src="/images/Preview4.jpg">
+<img src="/images/Preview1.jpg"> <img src="/images/Preview2.jpg">  
+<img src="/images/Preview3.jpg"> <img src="/images/Preview4.jpg">
 
 
 ### Dependencies
