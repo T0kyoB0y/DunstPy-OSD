@@ -1,0 +1,48 @@
+[global]
+    font = "Fira Code NF 13"
+    markup = yes
+    format = "<span font_size="14pt" font_family="Fira Code NF" align='center'><b>%s</b></span>\n <span font_size="10pt" font_family="Fira Code NF" align='left'>%b </span>"
+    frame_width = 0
+    sort = yes
+    indicate_hidden = yes
+    show_age_threshold = 60
+    word_wrap = yes
+    ignore_newline = true
+    origin = top-left
+    transparency = 0
+    idle_threshold = 120
+    monitor = 0
+    follow = mouse
+    show_indicators = false
+    sticky_history = false
+    line_height = 0
+    padding = 12
+    horizontal_padding = 12
+    corner_radius = 10
+    width = 320
+    heigth = 300
+    scale = 1
+    icon_position = 
+    min_icon_size = 64
+    max_icon_size = 64
+    alignment = center
+    vertical_alignment = bottom
+    progress_bar_max_width = 300
+    progress_bar_min_width = 100
+    progress_bar_height = 10
+    progress_bar_frame_width = 0
+    progress_bar_corner_radius = 5
+    offset = 25x25
+
+[urgency_low]
+    background = "#161616"
+    highlight = "#2596be"
+    timeout = 5
+
+[urgency_normal]
+    background = "#161616"
+    timeout = 20
+
+[urgency_critical]
+    background = "#131519"
+    timeout = 0
