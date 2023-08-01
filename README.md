@@ -1,9 +1,3 @@
----
-First-Release: Jul 31
-Current-Date: Jul 31
-Current-Time: 20:50:55
----
-
 # A Dunst-Python OSD Project
 
 An OSD made in Python, currently supports:
@@ -15,7 +9,7 @@ TODO:
    * Adjust compatibility with xorg
    * Num Lock and Caps Lock Display State
 
-Based on:  
+Original Project:  
  [Nmoleo/i3-volume-brightness-indicator](https://gitlab.com/Nmoleo/i3-volume-brightness-indicator)
 
  Preview:
@@ -54,8 +48,8 @@ Example on [Hyprland](https://github.com/hyprwm/Hyprland):
 # Volume-Brightness Keybindings #
 binde = $mainMod, F8, exec, ~/.config/dunst/scripts/main.py volume_up
 binde = $mainMod, F7, exec, ~/.config/dunst/scripts/main.py volume_down
-
 bindr = $mainMod, F6, exec, ~/.config/dunst/scripts/main.py volume_mute
+
 binde = $mainMod, code:69 , exec, ~/.config/dunst/scripts/main.py brightness_up
 binde = $mainMod, code:68 , exec, ~/.config/dunst/scripts/main.py brightness_down
 
