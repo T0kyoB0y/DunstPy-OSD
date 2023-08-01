@@ -4,7 +4,8 @@ An OSD made in Python, currently supports:
    * Brightness Display
    * Sound Display
    * Spotify Display
-   * Screenshots
+   * Screenshots  
+
 TODO:  
    * Adjust compatibility with xorg
    * Num Lock and Caps Lock Display State
