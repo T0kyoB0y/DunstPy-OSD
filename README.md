@@ -5,10 +5,10 @@ An OSD made in Python, currently supports:
    * Sound Display
    * Spotify Display
    * Screenshots  
+   * Num Lock and Caps Lock Display State  
 
 TODO:  
    * Adjust compatibility with xorg
-   * Num Lock and Caps Lock Display State
 
 Original Project:  
  [Nmoleo/i3-volume-brightness-indicator](https://gitlab.com/Nmoleo/i3-volume-brightness-indicator)
@@ -58,6 +58,10 @@ binde = $mainMod, code:68 , exec, ~/.config/dunst/scripts/main.py brightness_dow
 - volume_up
 - volume_down
 - volume_mute 
+- mute_mic
 - brightness_up
 - brightness_down
 - screenshot
+- capsLock_toggle
+- numLock_toggle
+

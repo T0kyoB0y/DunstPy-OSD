@@ -1,14 +1,18 @@
 #!/usr/bin/env python3
 
-import os, subprocess, sys, subprocess
+import os
+import subprocess
+import sys
 from datetime import datetime
+from time import sleep
 
 now = datetime.now()
 
 
 # Notification Settings #
 
-notification_timeout = 0
+notification_timeout = 1000
+
 notification_command = "dunstify"  # You can change it to notify-send if you prefer
 download_album_art = True  # Set to false if you want
 
@@ -31,6 +35,9 @@ volume_icon_3 = ""
 
 volume_play = "󰐎"
 volume_pause = "󰐎"
+
+mic = ""
+mic_mute = ""
 
 
 #   Brightness Settings #
@@ -72,10 +79,10 @@ def screenshot_image_verif(image):
     folder = screenshot_folder
 
     if os.path.isfile(f"{folder}/{image}") and screenshot_image_save:
-        command = f"{notification_command} -t {notification_timeout} -i {folder}/{image} -u low  '{screenshot_icon} Screenshot Saved'"
+        command = f"{notification_command} -t {notification_timeout} -i {folder}/{image} -u low  '{screenshot_icon}     Screenshot Saved'"
         subprocess.run(command, shell=True)
     else:
-        command = f"{notification_command} -t {notification_timeout} -u low '{screenshot_icon} Screenshot Copied to Clipboard' -i '/tmp/screenshot.png'"
+        command = f"{notification_command} -t {notification_timeout} -u low '{screenshot_icon}     Screenshot Copied to Clipboard' -i '/tmp/screenshot.png'"
         subprocess.run(command, shell=True)
 
 
@@ -95,7 +102,7 @@ def screenshot():
             subprocess.run(command, shell=True)
             screenshot_image_verif(image)
         else:
-            command = f'slurp | grim -g - "/tmp/screenshot.png" && wl-copy < "/tmp/screenshot.png"  '
+            command = f'slurp | grim -g - "/tmp/screenshot.png" && wl-copy < "/tmp/screenshot.png"'
             try:
                 result = subprocess.run(command, shell=True, check=True)
                 screenshot_image_verif("/tmp/screenshot.png")
@@ -254,13 +261,12 @@ def show_volume_notif():
                 f"int:value:{volume}",
                 f"{volume_icon}  {volume}%",
                 "-u",
-                "low"
+                "low",
             ]
         )
 
 
 def show_mute_notif():
-    vdown, vup = volume_down_percentage, volume_up_percentage
     volume_icon = volume_icon_0
     volume = get_volume()
     mute = get_mute()
@@ -325,6 +331,69 @@ def get_album_art(download_album_art):
         return "Z"
 
 
+def mute_mic():
+    command = 'pactl list sources | grep -A 10 "Name: alsa_input.pci-0000_00_1f.3.analog-stereo" | grep "Mute" | awk \'{print $2}\''
+
+    mic_state = subprocess.run(command, shell=True, capture_output=True, text=True)
+    mic_state = mic_state.stdout.strip()
+
+    subprocess.run(
+        'pactl set-source-mute "alsa_input.pci-0000_00_1f.3.analog-stereo" toggle',
+        shell=True,
+    )
+
+    if mic_state == "yes":
+        subprocess.run(
+            f"{notification_command} -t {notification_timeout} -u low '{mic}  Activado' ",
+            shell=True,
+        )
+
+    elif mic_state == "no":
+        subprocess.run(
+            f"{notification_command} -t {notification_timeout} -u low '{mic_mute}  Desactivado' ",
+            shell=True,
+        )
+
+
+# Bloq mayus and numpad mayus #
+
+
+def capsLock_toggle():
+    sleep(0.1)
+    command = "cat /sys/class/leds/*::capslock/brightness | awk 'NR==1'"
+    state = subprocess.run(command, shell=True, capture_output=True, text=True)
+    state = int(state.stdout.strip())
+
+    if state == 1:
+        subprocess.run(
+            f"{notification_command} -t {notification_timeout} -u low '{mayus_on}  Bloq Mayus ON' ",
+            shell=True,
+        )
+    elif state == 0:
+        subprocess.run(
+            f"{notification_command} -t {notification_timeout} -u low '{mayus_off}  Bloq Mayus OFF' ",
+            shell=True,
+        )
+
+
+def numLock_toggle():
+    sleep(0.1)
+    command = "cat /sys/class/leds/*::numlock/brightness | awk 'NR==1'"
+    state = subprocess.run(command, shell=True, capture_output=True, text=True)
+    state = int(state.stdout.strip())
+
+    if state == 1:
+        subprocess.run(
+            f"{notification_command} -t {notification_timeout} -u low '{num_on}  Num Lock ON' ",
+            shell=True,
+        )
+    elif state == 0:
+        subprocess.run(
+            f"{notification_command} -t {notification_timeout} -u low '{num_off}  Num Lock OFF' ",
+            shell=True,
+        )
+
+
 #   Main Function   #
 
 
@@ -356,6 +425,12 @@ def main(option):
         show_mute_notif()
     elif option == "screenshot":
         screenshot()
+    elif option == "mute_mic":
+        mute_mic()
+    elif option == "capsLock_toggle":
+        capsLock_toggle()
+    elif option == "numLock_toggle":
+        numLock_toggle()
     else:
         print("Invalid")
 
